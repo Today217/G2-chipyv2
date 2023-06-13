@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: white;
+}
+
+.logo {
+    text-align: center;
+    font-size: 30px;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeOut 5s ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.scene {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
