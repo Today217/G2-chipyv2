@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chipy</title>
+    <link rel="stylesheet" type="text/css" href="../css/pc.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/tab.css" media="screen and (min-width:600px) and (max-width:979px)">
+    <link rel="stylesheet" type="text/css" href="../css/phone.css" media="screen and (max-width:599px)">
+    <style>
+        .light {
+            position: relative;
+            text-align: center;
+        }
+        .square {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="light">
+        <span class="text">不知道吃哪家的洋芋片</span>
+        <span class="square" id="square">點我</span>
+        <img src="../img/Lovepik_com-401708288-carton.png">
+    </div>
+
+    <script>
+        const square = document.getElementById('square');
+        let dropCount = 0;
+        let currentCircle = null;
+
+        square.addEventListener('click', dropCircle);
+
+        function dropCircle() {
+            if (currentCircle) {
+                currentCircle.remove();
+            }
+
+            const circle = document.createElement('a');
+            circle.classList.add('circle');
+
+            const circleTop = square.offsetTop - 10;
+            const circleLeft = square.offsetLeft - 10;
+            const images = ['../img/1.png', '../img/2.png', '../img/3.png'];
+            const randomIndex = Math.floor(Math.random() * images.length);
+            const randomImage = images[randomIndex];
+            const urls = ['../html/pringles_introduce.html', '../html/Lianhua_intriduce.html', '../html/lays_introduce.html'];
+            const randomUrl = urls[randomIndex];
+            
+            circle.href = randomUrl;
+            circle.target = "_self";
+            circle.innerHTML = `<img src="${randomImage}" class="circle-image" />`;
+            circle.style.left = circleLeft + 'px';
+            circle.style.top = circleTop + 'px';
+
+            circle.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+
+            document.body.appendChild(circle);
+            currentCircle = circle;
+
+            const intervalId = setInterval(() => {
+                const currentTop = parseInt(circle.style.top);
+                const newTop = currentTop + 1;
+
+                if (newTop >= window.innerHeight - circle.offsetHeight) {
+                    clearInterval(intervalId);
+                } else {
+                    circle.style.top = newTop + 'px';
+                }
+            }, 1);
+        }
+    </script>
+</body>
+</html>
